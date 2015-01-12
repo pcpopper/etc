@@ -17,16 +17,17 @@ $numbers = (object) array('skipped'=>0, 'updated'=>0, 'added'=>0, 'id'=>0);
 $row_num = (object) array('skipped'=>0, 'updated'=>0, 'added'=>0);
 while ($i < $max) {
     if ($i) {
-        $num = rand(1,24);
+        $num = rand(1,100);
         //usleep(400000);
         switch ($num) {
-            case 4:
-            case 5:
+            case 1:
+            case 2:
+            case 3:
                 echo "<span class='update' id='$i'>.</span>";
                 $numbers->updated++;
                 $row_num->updated++;
                 break;
-            case 6:
+            case 10:
                 echo "<span class='skipped' id='$i'>.</span>";
                 $numbers->skipped++;
                 $row_num->skipped++;
