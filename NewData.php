@@ -49,8 +49,8 @@ if ($options->blocked) {
     font-size: 9pt;
 }
 .update {
-    background-color: #0000FF;
-    color: #0000FF;
+    background-color: orange;
+    color: orange;
     border-right: 1px solid black;
     font-size: 9pt;
 }
@@ -80,7 +80,7 @@ if ($options->blocked) {
         color: red;
     }
     .number_u {
-        color: #0000FF;
+        color: <?php echo ($options->block_v == 2) ? "orange" : "blue" ?>;
     }
     .number_s {
         color: forestgreen;
