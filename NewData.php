@@ -8,8 +8,8 @@ $options = (object) array(
     'block_v' => 2, // block version, currently accepted: 1 and 2
     'timed' => 0, // is time delayed or all at once
     'rand_range' => 100, // random range, 1-n
-    'skipped_range' => 1, // number of skipped per rand_range
-    'update_range' => 3, // number of updated per rand_range
+    'skipped_range' => 0, // number of skipped per rand_range
+    'update_range' => 1, // number of updated per rand_range
     'time_delay' => 400000 // delay time
 );
 ?>
@@ -88,7 +88,9 @@ if ($options->blocked) {
 </style>
 <?php
 
-$ranges = (object) array('skipped_range' => range(1, ($options->skipped_range)), 'update_range' => range(($options->skipped_range + 1), ($options->skipped_range + $options->update_range)));
+$ranges = (object) array(
+    'skipped_range' => range(0, ($options->skipped_range)),
+    'update_range' => range(($options->skipped_range + 1), ($options->skipped_range + $options->update_range)));
 
 $i = 0;
 $numbers = (object) array('skipped'=>0, 'updated'=>0, 'added'=>0);
