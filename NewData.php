@@ -1,8 +1,16 @@
 <?php
 /* Options */
 
-$options = (object) array('max' => 32126, 'width' => 250, 'blocked' => 0, 'timed' => 0);
-
+$options = (object) array(
+    'max' => 32126, // number of dots to process
+    'width' => 250, // width of dots on page
+    'blocked' => 0, // is dots or blocks
+    'timed' => 0, // is time delayed or all at once
+    'rand_range' => 100, // random range, 1-n
+    'skipped_range' => 1, // number of skipped per rand_range
+    'update_range' => 3, // number of updated per rand_range
+    'time_delay' => 400000 // delay time
+);
 ?>
 <style>
 <?php
@@ -54,37 +62,29 @@ if ($options->blocked) {
         color: forestgreen;
     }
 </style>
-<script>
-    function toBottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-</script>
 <?php
+
+$ranges = (object) array('skipped_range' => range(1, ($options->skipped_range)), 'update_range' => range(($options->skipped_range + 1), ($options->skipped_range + $options->update_range)));
+
 $i = 0;
 $numbers = (object) array('skipped'=>0, 'updated'=>0, 'added'=>0);
 $row_num = (object) array('skipped'=>0, 'updated'=>0, 'added'=>0);
 while ($i < $options->max) {
     if ($i) {
-        $num = rand(1,100);
-        if ($options->timed) usleep(400000);
-        switch ($num) {
-            case 1:
-            case 2:
-            case 3:
-                echo "<span class='update' id='$i'>.</span>";
-                $numbers->updated++;
-                $row_num->updated++;
-                break;
-            case 10:
-                echo "<span class='skipped' id='$i'>.</span>";
-                $numbers->skipped++;
-                $row_num->skipped++;
-                break;
-            default:
-                echo "<span class='insert' id='$i'>.</span>";
-                $numbers->added++;
-                $row_num->added++;
-                break;
+        $num = rand(1,$options->rand_range);
+        if ($options->timed) usleep($options->time_delay);
+        if (in_array($num, $ranges->update_range)) {
+            echo "<span class='update' id='$i'>.</span>";
+            $numbers->updated++;
+            $row_num->updated++;
+        } else if (in_array($num, $ranges->skipped_range)) {
+            echo "<span class='skipped' id='$i'>.</span>";
+            $numbers->skipped++;
+            $row_num->skipped++;
+        } else {
+            echo "<span class='insert' id='$i'>.</span>";
+            $numbers->added++;
+            $row_num->added++;
         }
         if ($i % $options->width == 0) {
             $j++;
