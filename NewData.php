@@ -4,7 +4,8 @@
 $options = (object) array(
     'max' => 32126, // number of dots to process
     'width' => 250, // width of dots on page
-    'blocked' => 0, // is dots or blocks
+    'blocked' => 1, // is dots or blocks
+    'block_v' => 2, // block version, currently accepted: 1 and 2
     'timed' => 0, // is time delayed or all at once
     'rand_range' => 100, // random range, 1-n
     'skipped_range' => 1, // number of skipped per rand_range
@@ -15,29 +16,52 @@ $options = (object) array(
 <style>
 <?php
 if ($options->blocked) {
+    if ($options->block_v == 1) {
 ?>
-    .insert {
-        background-color: red;
-        color: red;
-        background-clip: padding-box;
-        font-size: 7pt;
-        margin: 0.1em;
-    }
-    .update {
-        background-color: #0000FF;
-        color: #0000FF;
-        background-clip: padding-box;
-        font-size: 7pt;
-        margin: 0.1em;
-    }
-    .skipped {
-        background-color: forestgreen;
-        color: forestgreen;
-        background-clip: padding-box;
-        font-size: 7pt;
-        margin: 0.1em;
+.insert {
+    background-color: red;
+    color: red;
+    background-clip: padding-box;
+    font-size: 7pt;
+    margin: 0.1em;
+}
+.update {
+    background-color: #0000FF;
+    color: #0000FF;
+    background-clip: padding-box;
+    font-size: 7pt;
+    margin: 0.1em;
+}
+.skipped {
+    background-color: forestgreen;
+    color: forestgreen;
+    background-clip: padding-box;
+    font-size: 7pt;
+    margin: 0.1em;
 }
 <?php
+    } else {
+?>
+.insert {
+    background-color: red;
+    color: red;
+    border-right: 1px solid black;
+    font-size: 9pt;
+}
+.update {
+    background-color: #0000FF;
+    color: #0000FF;
+    border-right: 1px solid black;
+    font-size: 9pt;
+}
+.skipped {
+    background-color: forestgreen;
+    color: forestgreen;
+    border-right: 1px solid black;
+    font-size: 9pt;
+}
+<?php
+    }
 } else {
 ?>
     .insert {
