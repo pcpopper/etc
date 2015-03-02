@@ -1,0 +1,1 @@
+var gameScript = {conversations:{1:{text:"Hello, what is your name?", responses["Darren","Jed","Eva"]}};
