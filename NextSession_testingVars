@@ -1,0 +1,47 @@
+	private function parseOpenSessionsData($rows){
+		$test = 1; // sessions left in appointment
+//		$test = 2; // no sessions left in appointment, but others
+//		$test = 3; // no sessions left in appointment
+//		$test = 4; // sessions left in study
+//		$test = 5; // no sessions left in study
+//		$test = 6; // no sessions left in study, but others
+
+		$flag = true;
+		switch ($test) {
+			case 1:
+				break;
+			case 2:
+				$this->endFlag = true;
+				break;
+			case 3:
+				$flag = false;
+				$this->endFlag = true;
+				break;
+			case 4:
+				$this->type = 'study';
+				break;
+			case 5:
+				$this->type = 'study';
+				$this->endFlag = true;
+				break;
+			case 6:
+				$this->type = 'study';
+				$flag = false;
+				$this->endFlag = true;
+				break;
+		}
+
+		if ($flag) {
+			foreach ($rows as $row) {
+				if (empty($row) || !empty($row->EndTime) || $row->SessionId == $this->session->sessionId) {
+					continue;
+				}
+
+				if ($this->sessionCount++ <= 0) {
+					$this->nextSessionId = $row->SessionId;
+					$this->nextSessionDate = $row->AppointmentDate;
+					$this->setNextSessionUrl();
+				}
+			}
+		}
+	}
